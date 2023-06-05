@@ -9,6 +9,11 @@
 
   <name>food-ordering-system-microservices</name>
   <url>http://maven.apache.org</url>
+  <modules>
+    <module>auth</module>
+    <module>commons</module>
+    <module>eureka-server</module>
+  </modules>
 
 
   <properties>
@@ -16,7 +21,7 @@
     <maven.compiler.target>20</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.boot.dependencies-version>3.1.0</spring.boot.dependencies-version>
-    <spring.cloud-version>2022.0.3</spring.cloud-version>
+    <spring.cloud.dependencies-version>2022.0.3</spring.cloud.dependencies-version>
     <spring.boot.maven-version>3.1.0</spring.boot.maven-version>
   </properties>
 
@@ -32,7 +37,7 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring.cloud-version}</version>
+        <version>${spring.cloud.dependencies-version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -46,8 +51,15 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
+<!--    <dependency>-->
+<!--      <groupId>org.liquibase</groupId>-->
+<!--      <artifactId>liquibase-core</artifactId>-->
+<!--      <version>4.22.0</version>-->
+<!--    </dependency>-->
 
-                            <!--    TEST SCOPE -->
+
+    <!--    TEST SCOPE -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -57,6 +69,17 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>2.0.9</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

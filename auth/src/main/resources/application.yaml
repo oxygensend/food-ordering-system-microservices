@@ -1,0 +1,32 @@
+jwt:
+  secretKey: '614E645267556B58703273357638792F413F4428472B4B6250655368566D597133743677397A244326452948404D635166546A576E5A7234753778214125442A'
+  authExpirationMs: 3600000
+  refreshExpirationMs: 86400000
+
+server:
+  port: 8080
+spring:
+  application:
+    name: auth
+
+  datasource:
+    username: root
+    password: password
+    url: jdbc:postgresql://localhost:5432/auth
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7777/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
