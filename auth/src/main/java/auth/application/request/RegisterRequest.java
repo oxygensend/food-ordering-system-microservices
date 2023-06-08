@@ -7,16 +7,19 @@ public class RegisterRequest {
 
     @Size(min = 2)
     @Size(max = 64)
-    private final String firstName;
+    private  String firstName;
     @Size(min = 2)
     @Size(max = 64)
-    private final String lastName;
+    private String lastName;
 
     @Email
-    private final String email;
+    private  String email;
     @Size(min = 2)
     @Size(max = 200)
-    private final String password;
+    private  String password;
+
+    public RegisterRequest() {
+    }
 
     public RegisterRequest(String firstname, String lastName, String email, String password) {
         this.firstName = firstname;

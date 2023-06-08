@@ -2,6 +2,7 @@ package auth.infrastructure.security;
 
 import auth.domain.enums.TokenTypeEnum;
 import auth.infrastructure.config.TokenConfiguration;
+import auth.infrastructure.exception.TokenException;
 import auth.infrastructure.payload.RefreshTokenPayload;
 import auth.infrastructure.payload.TokenPayload;
 import auth.infrastructure.payload.factory.TokenPayloadFactory;
@@ -90,7 +91,7 @@ public class TokenStorageTest {
         when(factory.createTokenPayloadFromClaims(claims)).thenReturn(payload);
 
         // Act & Assert
-        assertThrows(IllegalStateException.class, () -> tokenStorage.validate(token, TokenTypeEnum.REFRESH));
+        assertThrows(TokenException.class, () -> tokenStorage.validate(token, TokenTypeEnum.REFRESH));
 
         // Verify
         verify(jwtExtractor, times(1)).extractAllClaims(token);

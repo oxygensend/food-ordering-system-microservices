@@ -8,12 +8,10 @@ import auth.domain.entity.Session;
 import auth.domain.entity.User;
 import auth.domain.enums.RoleEnum;
 import auth.domain.enums.TokenTypeEnum;
+import auth.domain.exception.InvalidCredentialsException;
+import auth.domain.exception.UserAlreadyExistsException;
 import auth.domain.manager.SessionManager;
-import auth.infrastructure.config.TokenConfiguration;
-import auth.infrastructure.payload.AccessTokenPayload;
 import auth.infrastructure.payload.RefreshTokenPayload;
-import auth.infrastructure.payload.TokenPayload;
-import auth.infrastructure.payload.factory.AccessTokenPayloadFactory;
 import auth.infrastructure.security.TokenStorage;
 import auth.infrastructure.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,7 +89,7 @@ public class AuthServiceTest {
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> authService.authenticate(request));
+        assertThrows(InvalidCredentialsException.class, () -> authService.authenticate(request));
         verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(userRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(sessionManager);
@@ -137,7 +135,7 @@ public class AuthServiceTest {
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(new User()));
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> authService.register(request));
+        assertThrows(UserAlreadyExistsException.class, () -> authService.register(request));
         verify(userRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(passwordEncoder, userRepository, sessionManager, tokenStorage);
     }

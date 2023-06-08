@@ -1,6 +1,7 @@
 package auth.infrastructure.security;
 
 import auth.domain.enums.TokenTypeEnum;
+import auth.infrastructure.exception.TokenException;
 import auth.infrastructure.config.TokenConfiguration;
 import auth.infrastructure.payload.ClaimsPayload;
 import auth.infrastructure.payload.TokenPayload;
@@ -39,7 +40,7 @@ public class TokenStorage {
         TokenPayload payload = factory.createTokenPayloadFromClaims(claims);
 
         if (payload.getType() != type) {
-            throw new IllegalStateException("Invalid token");
+            throw new TokenException("Invalid token");
         }
 
         return payload;
