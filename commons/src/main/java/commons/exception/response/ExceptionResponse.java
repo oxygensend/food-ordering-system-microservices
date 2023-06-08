@@ -49,6 +49,7 @@ public class ExceptionResponse {
         this.message = message;
         this.debugMessage = exception.getLocalizedMessage();
     }
+
     private void addSubException(SubExceptionResponse subError) {
         if (subExceptions == null) {
             subExceptions = new ArrayList<>();
@@ -87,44 +88,23 @@ public class ExceptionResponse {
         fieldErrors.forEach(this::addValidationException);
     }
 
-
     public String getCode() {
         return code;
     }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public HttpStatus getStatus() {
         return status;
     }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status;
-    }
-
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public String getMessage() {
         return message;
     }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getDebugMessage() {
         return debugMessage;
     }
 
-    public void setDebugMessage(String debugMessage) {
-        this.debugMessage = debugMessage;
+    public List<SubExceptionResponse> getSubExceptions() {
+        return subExceptions;
     }
 }

@@ -64,16 +64,16 @@ public class AuthService {
     }
 
     public AuthenticationResponse register(RegisterRequest request) {
-        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
+        Optional<User> userOptional = userRepository.findByEmail(request.email());
         if (userOptional.isPresent()) {
             throw new UserAlreadyExistsException();
         }
 
         User user = new User(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                passwordEncoder.encode(request.getPassword()),
+                request.firstName(),
+                request.lastName(),
+                request.email(),
+                passwordEncoder.encode(request.password()),
                 true
         );
         userRepository.save(user);
