@@ -4,6 +4,7 @@ import auth.application.request.AuthenticationRequest;
 import auth.application.request.RefreshTokenRequest;
 import auth.application.request.RegisterRequest;
 import auth.application.response.AuthenticationResponse;
+import auth.application.response.ValidationResponse;
 import auth.domain.entity.Session;
 import auth.domain.entity.User;
 import auth.domain.enums.RoleEnum;
@@ -14,6 +15,8 @@ import auth.domain.manager.SessionManager;
 import auth.infrastructure.payload.RefreshTokenPayload;
 import auth.infrastructure.security.TokenStorage;
 import auth.infrastructure.repository.UserRepository;
+import helper.mother.ValidationResponseMother;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -46,6 +49,9 @@ public class AuthServiceTest {
     private SessionManager sessionManager;
 
     private AuthService authService;
+
+    @Mock
+    private HttpServletRequest httpServletRequest;
 
     @BeforeEach
     public void setup() {
@@ -171,5 +177,20 @@ public class AuthServiceTest {
 
     }
 
+    @Test
+    public void test_ValidateToken(){
+
+        // Arrange
+        ValidationResponse expectedResponse = ValidationResponseMother.authorized();
+
+        when(httpServletRequest.getAttribute("username")).thenReturn(expectedResponse.username());
+        when(httpServletRequest.getAttribute("authorities")).thenReturn(expectedResponse.authorities());
+
+        // Act
+        ValidationResponse response = authService.validateToken(httpServletRequest);
+
+        assertEquals(response, expectedResponse);
+
+    }
 
 }

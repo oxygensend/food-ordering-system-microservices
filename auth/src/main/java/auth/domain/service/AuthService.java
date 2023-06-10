@@ -4,6 +4,7 @@ import auth.application.request.AuthenticationRequest;
 import auth.application.request.RefreshTokenRequest;
 import auth.application.request.RegisterRequest;
 import auth.application.response.AuthenticationResponse;
+import auth.application.response.ValidationResponse;
 import auth.domain.entity.Session;
 import auth.domain.enums.TokenTypeEnum;
 import auth.domain.exception.InvalidCredentialsException;
@@ -15,14 +16,17 @@ import auth.infrastructure.payload.RefreshTokenPayload;
 import auth.infrastructure.security.TokenStorage;
 import auth.domain.entity.User;
 import auth.infrastructure.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -99,5 +103,13 @@ public class AuthService {
                 .orElseThrow(() -> new SessionExpiredException("User not found by session id"));
 
         return sessionManager.prepareSession(user);
+    }
+
+    public ValidationResponse validateToken(HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        List<GrantedAuthority> authorities = (List<GrantedAuthority>) request.getAttribute("authorities");
+        boolean isAuthorized = username != null && authorities != null;
+
+        return new ValidationResponse(isAuthorized, username, authorities);
     }
 }

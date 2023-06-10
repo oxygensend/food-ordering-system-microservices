@@ -24,10 +24,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
     private final TokenStorage tokenStorage;
+    private final HttpServletRequest request;
 
-    public JwtAuthenticationFilter(UserDetailsService userDetailsService, TokenStorage tokenStorage) {
+    public JwtAuthenticationFilter(UserDetailsService userDetailsService, TokenStorage tokenStorage, HttpServletRequest request) {
         this.userDetailsService = userDetailsService;
         this.tokenStorage = tokenStorage;
+        this.request = request;
     }
 
     @Override
@@ -60,6 +62,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 securityContext.setAuthentication(authToken);
+
+                request.setAttribute("username", userDetails.getUsername());
+                request.setAttribute("authorities", userDetails.getAuthorities());
+
             }
             filterChain.doFilter(request, response);
         }

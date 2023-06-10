@@ -49,10 +49,13 @@ public class JwtAuthenticationFilterTest {
 
     private User user;
 
+    @Mock
+    private HttpServletRequest httpServletRequest;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        jwtAuthenticationFilter = new JwtAuthenticationFilter(userDetailsService, tokenStorage);
+        jwtAuthenticationFilter = new JwtAuthenticationFilter(userDetailsService, tokenStorage, httpServletRequest);
         SecurityContextHolder.setContext(securityContext);
 
         accessTokenPayloadFactory = (AccessTokenPayloadFactory) TokenPayloadFactoryProvider.getFactory(TokenTypeEnum.ACCESS);

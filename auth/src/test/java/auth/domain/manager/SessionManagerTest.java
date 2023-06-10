@@ -112,8 +112,8 @@ public class SessionManagerTest {
         AuthenticationResponse response = sessionManager.prepareSession(user);
 
         // Assert
-        assertEquals(expectedAccessToken, response.getAccessToken());
-        assertEquals(expectedRefreshToken, response.getRefreshToken());
+        assertEquals(expectedAccessToken, response.accessToken());
+        assertEquals(expectedRefreshToken, response.refreshToken());
         verify(sessionRepository, times(1)).deleteById(anyInt());
         verify(sessionRepository, times(1)).save(any(Session.class));
         verify(refreshTokenFactory, times(1)).createTokenPayload(any(Date.class), any(Date.class), eq(user));

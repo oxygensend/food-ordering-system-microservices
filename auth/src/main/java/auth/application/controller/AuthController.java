@@ -1,10 +1,12 @@
 package auth.application.controller;
 
 import auth.application.request.RefreshTokenRequest;
+import auth.application.response.ValidationResponse;
 import auth.domain.service.AuthService;
 import auth.application.request.AuthenticationRequest;
 import auth.application.request.RegisterRequest;
 import auth.application.response.AuthenticationResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,6 @@ public class AuthController {
     public AuthenticationResponse register(
             @RequestBody @Validated AuthenticationRequest request
     ) {
-        logger.info("przeszedlem walidacje");
         return authService.authenticate(request);
     }
 
@@ -47,5 +48,12 @@ public class AuthController {
             @RequestBody @Validated RefreshTokenRequest request
     ) {
         return authService.refreshToken(request);
+    }
+
+    @PostMapping("/validate_token")
+    @ResponseStatus(HttpStatus.OK)
+    public ValidationResponse validateToken(HttpServletRequest request)
+    {
+        return authService.validateToken(request);
     }
 }
