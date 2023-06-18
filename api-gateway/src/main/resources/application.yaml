@@ -1,0 +1,26 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: auth
+          uri: lb://AUTH
+          predicates:
+            - Path=/api/auth/**
+  zipkin:
+    base-url: http://localhost:9411
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7777/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true

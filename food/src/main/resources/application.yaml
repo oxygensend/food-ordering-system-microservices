@@ -1,0 +1,27 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: food
+
+  datasource:
+    username: root
+    password: password
+    url: jdbc:postgresql://localhost:5432/food
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7777/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true

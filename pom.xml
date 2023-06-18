@@ -13,6 +13,8 @@
     <module>auth</module>
     <module>commons</module>
     <module>eureka-server</module>
+      <module>food</module>
+      <module>api-gateway</module>
   </modules>
 
 
@@ -51,6 +53,12 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.zipkin.reporter2</groupId>
+      <artifactId>zipkin-reporter-brave</artifactId>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
 <!--    <dependency>-->
 <!--      <groupId>org.liquibase</groupId>-->
@@ -65,6 +73,8 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
