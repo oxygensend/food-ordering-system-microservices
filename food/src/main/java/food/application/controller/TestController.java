@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/api/food")
 public class TestController {
 
 
-    @GetMapping
+    @GetMapping("/test")
     public String test(HttpServletRequest request){
 
         return "Test";

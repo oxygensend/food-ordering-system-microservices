@@ -1,41 +1,33 @@
-package apigateway.filters;
+package apigateway.auth.filters;
 
-import apigateway.AuthValidationResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import apigateway.auth.AuthValidationResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Component
-public class AuthenticationPrefilter extends AbstractGatewayFilterFactory<AuthenticationPrefilter.Config> {
+public class AuthPrefilter extends AbstractGatewayFilterFactory<AuthPrefilter.Config> {
 
     private final WebClient.Builder webClientBuilder;
-    private final ObjectMapper objectMapper;
+    private final Logger logger;
 
-    @Qualifier("excludedUrls")
-    List<String> excludedUrls;
+    // TODO
+    List<String> excludedUrls = new ArrayList<>();
 
-    public AuthenticationPrefilter(WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
+    public AuthPrefilter(WebClient.Builder webClientBuilder) {
         super(Config.class);
         this.webClientBuilder = webClientBuilder;
-        this.objectMapper = objectMapper;
+        this.logger = LoggerFactory.getLogger(AuthPrefilter.class);
     }
 
     @Override
@@ -47,9 +39,10 @@ public class AuthenticationPrefilter extends AbstractGatewayFilterFactory<Authen
             System.out.println(bearerToken);
 
             if (isSecured(request)){
-                return webClientBuilder.build().get()
-                        .uri("lb://AUTH/api/auth/validate-token")
-                        .header("Authorization", bearerToken)
+                return webClientBuilder.build().post()
+                        .uri("lb://AUTH/api/auth/validate_token")
+                        .header(HttpHeaders.AUTHORIZATION, bearerToken)
+
                         .retrieve().bodyToMono(AuthValidationResponse.class)
                         .map(response -> {
                             exchange.getRequest().mutate().header("username", response.username());
@@ -61,7 +54,13 @@ public class AuthenticationPrefilter extends AbstractGatewayFilterFactory<Authen
 
                             return exchange;
                         })
-                        .flatMap(chain::filter);
+                        .flatMap(chain::filter)
+                        .onErrorResume(error -> {
+                            // TODO handle unauthrized exception
+                            logger.info(error.getMessage());
+
+                            return Mono.error(error);
+                        });
             }
 
             return chain.filter(exchange);

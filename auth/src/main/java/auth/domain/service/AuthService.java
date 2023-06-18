@@ -8,6 +8,7 @@ import auth.application.response.ValidationResponse;
 import auth.domain.entity.Session;
 import auth.domain.enums.TokenTypeEnum;
 import auth.domain.exception.InvalidCredentialsException;
+import auth.domain.exception.UserIsUnauthorizedException;
 import auth.infrastructure.exception.TokenException;
 import auth.domain.exception.SessionExpiredException;
 import auth.domain.exception.UserAlreadyExistsException;
@@ -110,6 +111,11 @@ public class AuthService {
         List<GrantedAuthority> authorities = (List<GrantedAuthority>) request.getAttribute("authorities");
         boolean isAuthorized = username != null && authorities != null;
 
-        return new ValidationResponse(isAuthorized, username, authorities);
+        if(!isAuthorized){
+            System.out.println("throwing exception");
+            throw new UserIsUnauthorizedException();
+        }
+
+        return new ValidationResponse(true, username, authorities);
     }
 }
