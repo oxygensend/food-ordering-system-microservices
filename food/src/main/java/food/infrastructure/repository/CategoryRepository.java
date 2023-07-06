@@ -1,4 +1,4 @@
-package food.infrastructure;
+package food.infrastructure.repository;
 
 import food.domain.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
