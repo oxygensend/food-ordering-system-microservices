@@ -1,6 +1,6 @@
 package food.domain.query.restaurant.get;
 
-import food.application.cqrs.query.QueryHandler;
+import commons.cqrs.query.QueryHandler;
 import food.application.response.GetRestaurantResponse;
 import food.domain.entity.Category;
 import food.domain.entity.Restaurant;

@@ -1,6 +1,6 @@
 package food.domain.command;
 
-import food.application.cqrs.command.Command;
+import commons.cqrs.command.Command;
 
 public record TestCommand() implements Command {
 }

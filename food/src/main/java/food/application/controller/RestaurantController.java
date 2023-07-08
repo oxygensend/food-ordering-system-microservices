@@ -1,6 +1,6 @@
 package food.application.controller;
 
-import food.application.cqrs.query.QueryBus;
+import commons.cqrs.query.QueryBus;
 import food.application.response.GetRestaurantResponse;
 import food.domain.query.restaurant.get.GetRestaurantQuery;
 import lombok.RequiredArgsConstructor;

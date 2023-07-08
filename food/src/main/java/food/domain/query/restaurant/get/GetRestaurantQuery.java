@@ -1,6 +1,6 @@
 package food.domain.query.restaurant.get;
 
-import food.application.cqrs.query.Query;
+import commons.cqrs.query.Query;
 
 import java.util.UUID;
 

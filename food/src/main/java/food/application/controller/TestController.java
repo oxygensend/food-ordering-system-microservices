@@ -2,8 +2,8 @@ package food.application.controller;
 
 
 import food.domain.command.TestCommand;
-import food.application.cqrs.command.CommandBus;
-import food.infrastructure.cqrs.command.SimpleCommandBus;
+import commons.cqrs.command.CommandBus;
+import commons.cqrs.command.SimpleCommandBus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
