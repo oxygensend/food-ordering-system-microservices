@@ -13,14 +13,14 @@ public class SimpleCommandBus implements CommandBus {
     }
 
     @Override
-    public <C extends Command> void dispatch(C command) {
+    public <R, C extends Command> R dispatch(C command) {
 
         @SuppressWarnings("unchecked")
-        CommandHandler<C> handler = (CommandHandler<C>) registry.getHandler(command.getClass());
+        CommandHandler<R, C> handler = (CommandHandler<R, C>) registry.getHandler(command.getClass());
         if (handler == null) {
             throw new UnsupportedCommandHandlerException(command);
         }
 
-        handler.handle(command);
+        return handler.handle(command);
     }
 }

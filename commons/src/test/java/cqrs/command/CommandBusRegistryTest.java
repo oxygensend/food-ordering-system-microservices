@@ -34,7 +34,7 @@ public class CommandBusRegistryTest {
 
         // Act
         CommandBusRegistry registry = new CommandBusRegistry(applicationContext);
-        CommandHandler<TestCommand> handler = registry.getHandler(TestCommand.class);
+        CommandHandler<Integer,TestCommand> handler = registry.getHandler(TestCommand.class);
 
         // Assert
         assertInstanceOf(TestCommandHandler.class, handler);

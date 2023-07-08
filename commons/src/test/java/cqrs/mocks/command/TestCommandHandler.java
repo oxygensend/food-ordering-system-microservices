@@ -2,10 +2,11 @@ package cqrs.mocks.command;
 
 import commons.cqrs.command.CommandHandler;
 
-public class TestCommandHandler implements CommandHandler<TestCommand> {
+public class TestCommandHandler implements CommandHandler<Object, TestCommand> {
 
     @Override
-    public void handle(TestCommand command) {
+    public Object handle(TestCommand command) {
 
+        return new Object();
     }
 }

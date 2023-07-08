@@ -11,7 +11,7 @@ import java.util.Map;
 @Slf4j
 public class CommandBusRegistry {
 
-    private final Map<Class<? extends Command>, Class<? extends CommandHandler<?>>> handlers;
+    private final Map<Class<? extends Command>, Class<? extends CommandHandler<?, ?>>> handlers;
     private final ApplicationContext applicationContext;
 
     public CommandBusRegistry(ApplicationContext applicationContext) {
@@ -29,18 +29,18 @@ public class CommandBusRegistry {
     private void register(String name) {
 
         Class<?> type = applicationContext.getType(name);
-        Class<? extends CommandHandler<?>> handlerType = (Class<? extends CommandHandler<?>>) applicationContext.getType(name);
+        Class<? extends CommandHandler<?, ?>> handlerType = (Class<? extends CommandHandler<?, ?>>) applicationContext.getType(name);
         Class<?>[] genericArguments = GenericTypeResolver.resolveTypeArguments(handlerType, CommandHandler.class);
 
         assert genericArguments != null;
-        Class<? extends Command> commandType = (Class<? extends Command>) genericArguments[0];
+        Class<? extends Command> commandType = (Class<? extends Command>) genericArguments[1];
 
         handlers.put(commandType, handlerType);
     }
 
     @SuppressWarnings("unchecked")
-    public <C extends Command> CommandHandler<C> getHandler(Class<C> commandType) {
-        Class<? extends CommandHandler<?>> handlerType = handlers.get(commandType);
-        return (CommandHandler<C>) applicationContext.getBean(handlerType);
+    public <R, C extends Command> CommandHandler<R, C> getHandler(Class<C> commandType) {
+        Class<? extends CommandHandler<?, ?>> handlerType = handlers.get(commandType);
+        return (CommandHandler<R, C>) applicationContext.getBean(handlerType);
     }
 }
