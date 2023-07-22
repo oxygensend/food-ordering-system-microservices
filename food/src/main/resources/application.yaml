@@ -10,12 +10,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/food
     driver-class-name: org.postgresql.Driver
   jpa:
-    properties:
-      hibernate:
-        format_sql: true
     hibernate:
       ddl-auto: update
-    show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 eureka:
@@ -25,3 +21,14 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     enabled: true
+logging:
+  level:
+    sql: debug
+    org.hibernate.orm.jdbc.bind: trace
+    org.hibernate.SQL: DEBUG
+    org.hibernate.hql: debug
+    org.hibernate.cache: debug
+    org.hibernate.transaction: debug
+    org.hibernate.tool.hbm2ddl: debug
+  file:
+    name: ${java.io.tmpdir}/${spring.application.name}.log

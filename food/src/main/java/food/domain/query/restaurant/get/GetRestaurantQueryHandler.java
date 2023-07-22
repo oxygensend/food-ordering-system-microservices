@@ -7,11 +7,13 @@ import food.domain.entity.Restaurant;
 import food.domain.exception.RestaurantNotFoundException;
 import food.infrastructure.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Component
 public class GetRestaurantQueryHandler implements QueryHandler<GetRestaurantResponse, GetRestaurantQuery> {
 
     private final RestaurantRepository repository;

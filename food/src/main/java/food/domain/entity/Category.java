@@ -1,15 +1,17 @@
 package food.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "food_category")
 public class Category {
@@ -24,12 +26,9 @@ public class Category {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Restaurant> restaurants;
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Restaurant> restaurants = new HashSet<>();
 
-    public Category() {
-        this.restaurants = new HashSet<>();
-    }
 
     public Category(UUID id, String name, String description, Set<Restaurant> restaurants) {
         this.id = id;
@@ -37,4 +36,9 @@ public class Category {
         this.description = description;
         this.restaurants = restaurants;
     }
+
+    public void addRestaurant(Restaurant restaurant) {
+        restaurants.add(restaurant);
+    }
+
 }

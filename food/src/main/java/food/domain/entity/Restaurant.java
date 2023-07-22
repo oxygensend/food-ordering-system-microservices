@@ -8,8 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
+@NoArgsConstructor
 @Entity
 @Table(name = "food_restaurant")
 public class Restaurant {
@@ -18,37 +21,26 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-
-    @NonNull
     @Column(nullable = false)
     private String name;
 
     private String description;
 
-    @NonNull
     @Column(nullable = false)
     private String openingTime;
 
-    @NonNull
     @Column(nullable = false)
     private String closingTime;
 
-    @OneToMany(mappedBy = "restaurant")
-    private Set<Course> courses;
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    private Set<Course> courses = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "food_restaurant_category",
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "food_restaurant_category",
             joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
-    )
-    private Set<Category> categories;
-
-    public Restaurant() {
-        this.courses = new HashSet<>();
-        this.categories = new HashSet<>();
-    }
 
     public Restaurant(UUID id, @NonNull String name, String description, @NonNull String openingTime, @NonNull String closingTime, Set<Course> courses, Set<Category> categories) {
         this.id = id;
@@ -59,4 +51,15 @@ public class Restaurant {
         this.courses = courses;
         this.categories = categories;
     }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+        category.getRestaurants().add(this);
+    }
+
+    public void removeCategory(Category category){
+        this.categories.remove(category);
+        category.getRestaurants().remove(this);
+    }
+
 }

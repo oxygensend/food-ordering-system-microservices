@@ -5,10 +5,13 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Data
-@Entity
+@ToString
+@Getter
+@Setter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "food_food")
 public class Course {
     @Id
@@ -30,8 +33,7 @@ public class Course {
     @ManyToOne
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Restaurant restaurant;
-
 
 }
