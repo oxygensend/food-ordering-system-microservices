@@ -3,9 +3,11 @@ package food.application.controller;
 import commons.cqrs.command.CommandBus;
 import commons.cqrs.query.QueryBus;
 import food.application.request.CreateRestaurantRequest;
+import food.application.request.UpdateRestaurantRequest;
 import food.application.response.GetRestaurantResponse;
 import food.application.response.RestaurantIdResponse;
 import food.domain.command.restaurant.create.CreateRestaurantCommand;
+import food.domain.command.restaurant.update.UpdateRestaurantCommand;
 import food.domain.query.restaurant.get.GetRestaurantQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,5 +34,11 @@ public class RestaurantController {
     @ResponseStatus(HttpStatus.CREATED)
     public RestaurantIdResponse create(@RequestBody @Validated CreateRestaurantRequest request) {
         return commandBus.dispatch(new CreateRestaurantCommand(request));
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable("id") UUID id, @RequestBody @Validated UpdateRestaurantRequest request) {
+        commandBus.dispatch(new UpdateRestaurantCommand(request, id));
     }
 }

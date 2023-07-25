@@ -34,19 +34,19 @@ public class GetRestaurantQueryHandlerTest {
     public void testShouldFindRestaurant() {
         // Arrange
         Restaurant restaurant = RestaurantMother.withId(UUID.randomUUID());
-        GetRestaurantQuery query = new GetRestaurantQuery(restaurant.getId());
+        GetRestaurantQuery query = new GetRestaurantQuery(restaurant.id());
 
-        Set<String> categories = restaurant.getCategories().stream().map(Category::getName).collect(Collectors.toSet());
+        Set<String> categories = restaurant.categories().stream().map(Category::name).collect(Collectors.toSet());
         GetRestaurantResponse expectedResponse = new GetRestaurantResponse(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getDescription(),
-                restaurant.getOpeningTime(),
-                restaurant.getClosingTime(),
+                restaurant.id(),
+                restaurant.name(),
+                restaurant.description(),
+                restaurant.openingTime(),
+                restaurant.closingTime(),
                 categories
         );
 
-        when(repository.findById(restaurant.getId())).thenReturn(Optional.of(restaurant));
+        when(repository.findById(restaurant.id())).thenReturn(Optional.of(restaurant));
 
         // Act
         handler = new GetRestaurantQueryHandler(repository);

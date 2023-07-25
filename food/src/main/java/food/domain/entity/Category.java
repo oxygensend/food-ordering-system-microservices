@@ -2,6 +2,7 @@ package food.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @ToString
 @Builder
 @NoArgsConstructor
+@Accessors(chain = true, fluent = true)
 @Entity
 @Table(name = "food_category")
 public class Category {

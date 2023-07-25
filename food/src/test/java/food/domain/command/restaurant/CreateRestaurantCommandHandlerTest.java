@@ -34,7 +34,6 @@ public class CreateRestaurantCommandHandlerTest {
     @Test
     public void testShouldCreateRestaurant() {
         // Arrange
-        var restaurant = RestaurantMother.withId(UUID.randomUUID());
         var categoriesIds = new HashSet<UUID>();
         categoriesIds.add(UUID.randomUUID());
         categoriesIds.add(UUID.randomUUID());

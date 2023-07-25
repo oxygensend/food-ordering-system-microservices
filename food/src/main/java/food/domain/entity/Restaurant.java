@@ -2,6 +2,7 @@ package food.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.lang.NonNull;
 
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @ToString
 @Builder
 @NoArgsConstructor
+@Accessors(chain = true, fluent = true)
 @Entity
 @Table(name = "food_restaurant")
 public class Restaurant {
@@ -54,12 +56,12 @@ public class Restaurant {
 
     public void addCategory(Category category) {
         this.categories.add(category);
-        category.getRestaurants().add(this);
+        category.restaurants().add(this);
     }
 
     public void removeCategory(Category category){
         this.categories.remove(category);
-        category.getRestaurants().remove(this);
+        category.restaurants().remove(this);
     }
 
 }

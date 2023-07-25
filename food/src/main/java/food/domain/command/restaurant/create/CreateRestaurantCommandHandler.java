@@ -32,6 +32,6 @@ public class CreateRestaurantCommandHandler implements CommandHandler<Restaurant
 
         restaurantRepository.save(restaurant);
 
-        return new RestaurantIdResponse(restaurant.getId());
+        return new RestaurantIdResponse(restaurant.id());
     }
 }

@@ -21,14 +21,14 @@ public class GetRestaurantQueryHandler implements QueryHandler<GetRestaurantResp
     @Override
     public GetRestaurantResponse handle(GetRestaurantQuery query) {
         Restaurant restaurant = repository.findById(query.restaurantId()).orElseThrow(() -> new RestaurantNotFoundException("Restaurant with id: " + query.restaurantId() + " not found"));
-        Set<String> categories = restaurant.getCategories().stream().map(Category::getName).collect(Collectors.toSet());
+        Set<String> categories = restaurant.categories().stream().map(Category::name).collect(Collectors.toSet());
 
         return new GetRestaurantResponse(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getDescription(),
-                restaurant.getOpeningTime(),
-                restaurant.getClosingTime(),
+                restaurant.id(),
+                restaurant.name(),
+                restaurant.description(),
+                restaurant.openingTime(),
+                restaurant.closingTime(),
                 categories
         );
     }

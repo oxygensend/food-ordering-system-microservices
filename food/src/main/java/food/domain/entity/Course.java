@@ -2,6 +2,7 @@ package food.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true, fluent = true)
 @Entity
 @Table(name = "food_food")
 public class Course {
