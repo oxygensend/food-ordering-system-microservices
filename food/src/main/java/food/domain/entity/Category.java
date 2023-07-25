@@ -3,7 +3,10 @@ package food.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -12,6 +15,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true, fluent = true)
 @Entity
@@ -31,13 +35,16 @@ public class Category {
     @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Restaurant> restaurants = new HashSet<>();
 
+    @Column(nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    public Category(UUID id, String name, String description, Set<Restaurant> restaurants) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.restaurants = restaurants;
-    }
+
+    @Column
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+
 
     public void addRestaurant(Restaurant restaurant) {
         restaurants.add(restaurant);

@@ -29,4 +29,20 @@ public class RestaurantMother {
                 .courses(courses)
                 .build();
     }
+
+    public static Restaurant withoutCoursesId(UUID id) {
+        Set<Category> categories = new HashSet<>();
+        categories.add(CategoryMother.withId(UUID.randomUUID()));
+        categories.add(CategoryMother.withId(UUID.randomUUID()));
+
+        return Restaurant.builder()
+                .id(id)
+                .name("Test")
+                .description("Test description")
+                .openingTime("10:00")
+                .closingTime("18:00")
+                .categories(categories)
+                .courses(new HashSet<>())
+                .build();
+    }
 }

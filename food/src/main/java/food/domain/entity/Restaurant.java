@@ -3,8 +3,13 @@ package food.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.NonNull;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -13,6 +18,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true, fluent = true)
 @Entity
@@ -43,25 +49,36 @@ public class Restaurant {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    @Column(nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    public Restaurant(UUID id, @NonNull String name, String description, @NonNull String openingTime, @NonNull String closingTime, Set<Course> courses, Set<Category> categories) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.openingTime = openingTime;
-        this.closingTime = closingTime;
-        this.courses = courses;
-        this.categories = categories;
-    }
+    @Column()
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    @Column()
+    private LocalDateTime deletedAt;
+
 
     public void addCategory(Category category) {
         this.categories.add(category);
         category.restaurants().add(this);
     }
 
-    public void removeCategory(Category category){
+    public void removeCategory(Category category) {
         this.categories.remove(category);
         category.restaurants().remove(this);
     }
 
+
+    public void addCourse(Course course) {
+        this.courses.add(course);
+        course.restaurant(this);
+    }
+
+    public void removeCourse(Course course) {
+        this.courses.remove(course);
+        course.restaurant(null);
+    }
 }

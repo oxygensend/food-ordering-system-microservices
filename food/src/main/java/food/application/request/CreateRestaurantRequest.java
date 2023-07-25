@@ -10,7 +10,6 @@ import java.util.UUID;
 public record CreateRestaurantRequest(
         @NotBlank
         String name,
-        @NotBlank
         String description,
         @NotBlank
         @HourType
