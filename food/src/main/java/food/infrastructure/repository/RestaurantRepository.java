@@ -1,7 +1,10 @@
 package food.infrastructure.repository;
 
 import food.domain.entity.Restaurant;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface RestaurantRepository extends JpaRepository<Restaurant, UUID> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, UUID>, JpaSpecificationExecutor<Restaurant> {
 
     @Override
     @Query("select r from Restaurant r where r.deletedAt is not null")
@@ -28,4 +31,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, UUID> {
     @Modifying
     @Query("update Restaurant r set r.deletedAt = CURRENT_DATE where r.id = :id")
     void softDelete(@Param("id") UUID id);
+
+    Page<Restaurant> findAll(Pageable pageable);
+
 }
