@@ -1,7 +1,7 @@
 package food.domain.command.restaurant.create;
 
 import commons.cqrs.command.CommandHandler;
-import food.application.response.RestaurantIdResponse;
+import food.application.response.restaurant.RestaurantIdResponse;
 import food.domain.entity.Restaurant;
 import food.domain.exception.CategoriesDoesntExistException;
 import food.infrastructure.repository.CategoryRepository;

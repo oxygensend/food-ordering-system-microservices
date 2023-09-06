@@ -1,8 +1,8 @@
 package food.domain.query.restaurant.getAll;
 
 import commons.cqrs.query.QueryHandler;
-import food.application.response.RestaurantPagedListResponse;
-import food.application.response.RestaurantResponse;
+import food.application.response.restaurant.RestaurantPagedListResponse;
+import food.application.response.restaurant.RestaurantResponse;
 import food.domain.specification.RestaurantSpecification;
 import food.domain.entity.Restaurant;
 import food.infrastructure.repository.RestaurantRepository;

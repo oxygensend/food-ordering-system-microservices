@@ -1,6 +1,6 @@
 package food.domain.command.restaurant;
 
-import food.application.request.UpdateRestaurantRequest;
+import food.application.request.restaurant.UpdateRestaurantRequest;
 import food.domain.command.restaurant.update.UpdateRestaurantCommand;
 import food.domain.command.restaurant.update.UpdateRestaurantCommandHandler;
 import food.domain.entity.Category;

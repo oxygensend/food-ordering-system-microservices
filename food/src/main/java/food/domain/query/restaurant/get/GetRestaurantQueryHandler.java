@@ -1,7 +1,7 @@
 package food.domain.query.restaurant.get;
 
 import commons.cqrs.query.QueryHandler;
-import food.application.response.GetRestaurantResponse;
+import food.application.response.restaurant.GetRestaurantResponse;
 import food.domain.entity.Category;
 import food.domain.entity.Restaurant;
 import food.domain.exception.RestaurantNotFoundException;

@@ -1,4 +1,4 @@
-package food.application.response;
+package food.application.response.restaurant;
 
 import java.util.List;
 

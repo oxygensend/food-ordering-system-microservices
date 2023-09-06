@@ -2,11 +2,11 @@ package food.application.controller;
 
 import commons.cqrs.command.CommandBus;
 import commons.cqrs.query.QueryBus;
-import food.application.request.CreateRestaurantRequest;
-import food.application.request.UpdateRestaurantRequest;
-import food.application.response.GetRestaurantResponse;
-import food.application.response.RestaurantIdResponse;
-import food.application.response.RestaurantPagedListResponse;
+import food.application.request.restaurant.CreateRestaurantRequest;
+import food.application.request.restaurant.UpdateRestaurantRequest;
+import food.application.response.restaurant.GetRestaurantResponse;
+import food.application.response.restaurant.RestaurantIdResponse;
+import food.application.response.restaurant.RestaurantPagedListResponse;
 import food.domain.command.restaurant.create.CreateRestaurantCommand;
 import food.domain.command.restaurant.delete.DeleteRestaurantCommand;
 import food.domain.command.restaurant.update.UpdateRestaurantCommand;

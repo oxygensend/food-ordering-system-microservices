@@ -1,4 +1,4 @@
-package food.application.request;
+package food.application.request.restaurant;
 
 import food.infrastructure.validation.hourType.HourType;
 import jakarta.validation.constraints.NotBlank;

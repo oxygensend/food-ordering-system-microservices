@@ -1,7 +1,7 @@
 package food.domain.command.restaurant.update;
 
 import commons.cqrs.command.Command;
-import food.application.request.UpdateRestaurantRequest;
+import food.application.request.restaurant.UpdateRestaurantRequest;
 
 import java.util.UUID;
 

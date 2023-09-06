@@ -1,14 +1,13 @@
 package food.domain.command.restaurant;
 
-import food.application.request.CreateRestaurantRequest;
-import food.application.response.RestaurantIdResponse;
+import food.application.request.restaurant.CreateRestaurantRequest;
+import food.application.response.restaurant.RestaurantIdResponse;
 import food.domain.command.restaurant.create.CreateRestaurantCommand;
 import food.domain.command.restaurant.create.CreateRestaurantCommandHandler;
 import food.domain.entity.Category;
 import food.infrastructure.repository.CategoryRepository;
 import food.infrastructure.repository.RestaurantRepository;
 import food.mother.CategoryMother;
-import food.mother.RestaurantMother;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
