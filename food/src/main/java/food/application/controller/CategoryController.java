@@ -6,6 +6,7 @@ import food.application.request.category.CreateCategoryRequest;
 import food.application.request.category.UpdateCategoryRequest;
 import food.application.response.category.CategoryIdResponse;
 import food.application.response.category.CategoryPagedListResponse;
+import food.application.response.category.GetCategoryResponse;
 import food.application.response.restaurant.GetRestaurantResponse;
 import food.domain.command.category.create.CreateCategoryCommand;
 import food.domain.command.category.delete.DeleteCategoryCommand;
@@ -44,7 +45,7 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GetRestaurantResponse show(@PathVariable("id") UUID id) {
+    public GetCategoryResponse show(@PathVariable("id") UUID id) {
         return queryBus.dispatch(new GetCategoryQuery(id));
     }
 
